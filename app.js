@@ -4,10 +4,12 @@ const path = require("node:path");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
-const { PrismaClient } = require("@prisma/client/extension");
+const { PrismaClient } = require("@prisma/client");
+const indexRouter = require("./routes/indexRouter");
 require("dotenv").config();
+
+const prisma = new PrismaClient();
 
 const PORT = process.env.PORT || 3000;
 
@@ -43,16 +45,16 @@ app.use(passport.session());
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const { rows } = await pool.query(
-        "SELECT * FROM users WHERE username = $1",
-        [username.toLowerCase()]
-      );
-
-      const user = rows[0];
+      const user = await prisma.users.findUnique({
+        where: {
+          // Or username: username
+          username,
+        },
+      });
 
       if (!user) return done(null, false, { message: "Incorrect username" });
 
-      const match = await bcrypt.compare(password, user.passport);
+      const match = String(password) === String(user.password);
 
       if (!match) return done(null, false, { message: "Incorrect password" });
 
@@ -63,23 +65,37 @@ passport.use(
   })
 );
 
+// The reason passport require us to define these functions is so
+// that we can make sure that whatever bit of data it’s looking
+// for actually exists in our Database
 passport.serializeUser(async (user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
-      id,
-    ]);
-
-    const user = rows[0];
+    const user = await prisma.users.findUnique({
+      where: {
+        //Or id: id
+        id,
+      },
+    });
 
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
+
+app.use(async (req, res, next) => {
+  const isAuthenticated = await req.isAuthenticated();
+
+  console.log("isAuthenticated", isAuthenticated);
+
+  next();
+});
+
+app.use("/", indexRouter);
 
 app.get("log-out", (req, res, next) => {
   req.logout((err) => {

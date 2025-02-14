@@ -5,6 +5,8 @@ const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const { PrismaClient } = require("@prisma/client/extension");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
@@ -21,8 +23,18 @@ app.use(
   session({
     cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
     secret: process.env.SESSION_SECRET,
+    //saveUninitialized: true is used to store session cookie on session storage
+    //even when user is not authenticated or hasn't done anything setting it to false prevents it
     saveUninitialized: false,
+    //resave helps to extend expiration date on session, need to set explicitly
+    //if session stores don't support the "touch" command
+    resave: true,
     name: "storage_app_cookie",
+    store: new PrismaSessionStore(new PrismaClient(), {
+      checkPeriod: 2 * 60 * 1000, //ms
+      dbRecordIdIsSessionId: true,
+      dbRecordIdFunction: undefined,
+    }),
   })
 );
 

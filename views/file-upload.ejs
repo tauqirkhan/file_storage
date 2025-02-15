@@ -6,10 +6,10 @@
     <title>Upload file</title>
   </head>
   <body>
-    <form action="/upload" method="POST">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
       <div>
         <label for="uploadFile"></label>
-        <input type="file" name="file" id="uploadFile" required />
+        <input type="file" name="uploadFile" id="uploadFile" required />
       </div>
       <input type="submit" value="submit" />
     </form>

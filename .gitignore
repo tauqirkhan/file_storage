@@ -1,3 +1,7 @@
+# add folder but not files uploaded (used .gitkeep because git does not track empty folder)
+/private/uploads/*
+!/private/uploads/.gitkeep
+
 # Logs
 logs
 *.log

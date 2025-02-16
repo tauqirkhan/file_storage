@@ -5,13 +5,22 @@ const prisma = new PrismaClient();
 const postSignUp = async (req, res) => {
   try {
     const { username, password, fullname } = req.body;
-    await prisma.users.create({
+    const result = await prisma.users.create({
       data: {
         username,
         fullname,
         password,
+        folders: {
+          create: {
+            name: `${fullname}'s files`,
+          },
+        },
+      },
+      include: {
+        folders: true,
       },
     });
+    console.log(result);
     res.redirect("/");
   } catch (err) {
     console.error(err);

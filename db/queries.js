@@ -1,3 +1,15 @@
-const pool = require("./pool");
+const { PrismaClient } = require("@prisma/client");
 
-//your queries here
+const prisma = new PrismaClient();
+
+async function getAllFoldersArrayOfUser(userId) {
+  const foldersArray = await prisma.folders.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+
+  return foldersArray;
+}
+
+module.exports = { getAllFoldersArrayOfUser };

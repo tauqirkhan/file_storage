@@ -65,9 +65,16 @@ passport.use(
   })
 );
 
-// The reason passport require us to define these functions is so
-// that we can make sure that whatever bit of data it’s looking
-// for actually exists in our Database
+// These next two functions define what bit of information passport is
+// looking for when it creates and then decodes the cookie.
+// The reason they require us to define these functions is so that
+// we can make sure that whatever bit of data it’s looking for actually
+// exists in our Database! passport.serializeUser takes a callback
+// which contains the information we wish to store in the session data.
+// passport.deserializeUser is called when retrieving a session,
+// where it will extract the data we “serialized” in it then ultimately
+// attach something to the .user property of the request object (req.user)
+// for use in the rest of the request.
 passport.serializeUser(async (user, done) => {
   done(null, user.id);
 });
@@ -85,14 +92,6 @@ passport.deserializeUser(async (id, done) => {
   } catch (err) {
     done(err);
   }
-});
-
-app.use(async (req, res, next) => {
-  const isAuthenticated = await req.isAuthenticated();
-
-  console.log("isAuthenticated", isAuthenticated);
-
-  next();
 });
 
 app.use("/", indexRouter);

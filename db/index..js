@@ -1,4 +1,4 @@
-//This will be used to populate database
+//This will be used to test query
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();

@@ -24,4 +24,19 @@ async function insertFileInsideFolder(folderId, fileObject) {
   return result;
 }
 
-module.exports = { getAllFoldersArrayOfUser, insertFileInsideFolder };
+async function insertFolderByUser(userId, FolderName) {
+  const result = await prisma.folders.create({
+    data: {
+      userId,
+      name: FolderName,
+    },
+  });
+
+  return result;
+}
+
+module.exports = {
+  getAllFoldersArrayOfUser,
+  insertFileInsideFolder,
+  insertFolderByUser,
+};

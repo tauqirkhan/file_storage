@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Storage</title>
+  </head>
+  <body>
+    <form action="/add/folder" method="POST">
+      <div>
+        <label for="folderName">Write folder name</label>
+        <input
+          type="text"
+          name="folderName"
+          id="folderName"
+          autocomplete="off"
+          required
+        />
+      </div>
+      <input type="submit" value="Add folder" />
+    </form>
+    <div>
+      <% folders.forEach(folder => { %>
+      <h1><%= folder.name %></h1>
+      <% }) %>
+    </div>
+  </body>
+</html>

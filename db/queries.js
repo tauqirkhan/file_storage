@@ -12,4 +12,16 @@ async function getAllFoldersArrayOfUser(userId) {
   return foldersArray;
 }
 
-module.exports = { getAllFoldersArrayOfUser };
+async function insertFileInsideFolder(folderId, fileObject) {
+  const result = await prisma.file.create({
+    data: {
+      folderId: folderId,
+      filename: fileObject.filename,
+      filesize: fileObject.size,
+      filePath: fileObject.path,
+    },
+  });
+  return result;
+}
+
+module.exports = { getAllFoldersArrayOfUser, insertFileInsideFolder };

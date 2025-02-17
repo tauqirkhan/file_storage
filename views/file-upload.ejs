@@ -6,7 +6,12 @@
     <title>Upload file</title>
   </head>
   <body>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
+    <div><%= folderName %></div>
+    <form
+      action="/<%= selectedFolderIndex %>/upload"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <div>
         <label for="uploadFile"></label>
         <input type="file" name="uploadFile" id="uploadFile" required />

@@ -42,7 +42,7 @@ model File {
   filesize  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  filerPath String
+  filePath String
   folderId  Int
   folder    Folders  @relation(fields: [folderId], references: [id])
 }

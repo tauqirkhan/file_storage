@@ -6,7 +6,10 @@ async function getAllFoldersArrayOfUser(userId) {
   const foldersArray = await prisma.folders.findMany({
     where: {
       userId: userId,
-    },
+    }, 
+    include: {
+      file: true
+    }
   });
 
   return foldersArray;

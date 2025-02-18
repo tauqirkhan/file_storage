@@ -14,10 +14,11 @@ indexRouter.get("/", checkAuthentication, getIndexPage);
 indexRouter.get("/login", getLoginForm);
 indexRouter.get("/sign-up", getSignUpForm);
 indexRouter.get(
-  "/:folder_number/folder",
+  "/:user_folder_index/folder",
   checkAuthentication,
   getAllFilesFromUserFolder
 );
+
 
 indexRouter.post("/sign-up", postSignUp);
 indexRouter.post(
@@ -25,6 +26,7 @@ indexRouter.post(
   checkAuthentication,
   postFileUpload
 );
+
 indexRouter.post("/add/folder", postAddFolder);
 
 module.exports = indexRouter;

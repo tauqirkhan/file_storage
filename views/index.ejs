@@ -20,9 +20,28 @@
       <input type="submit" value="Add folder" />
     </form>
     <div>
-      <% folders.forEach(folder => { %>
-      <h1><%= folder.name %></h1>
+      <% folders.forEach((folder, index) => { %>
+      <a href="/<%= index %>/folder"><%= folder.name %></a>
       <% }) %>
     </div>
+    <% if(selectedFolderIndex !== null && folders[selectedFolderIndex]) { %>
+    <div><%= folders[selectedFolderIndex].name %></div>
+    <form
+      action="/<%= selectedFolderIndex %>/upload"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <div>
+        <label for="uploadFile"></label>
+        <input type="file" name="uploadFile" id="uploadFile" required />
+      </div>
+      <input type="submit" value="submit" />
+    </form>
+    <% folders[selectedFolderIndex].file.forEach(file => { %>
+    <h1><%= file.filename %></h1>
+    <h1><%= file.filesize / 1024 %>KB</h1>
+    <h1><%= file.updatedAt %></h1>
+    <h1><%= file.filePath %></h1>
+    <% }) %> <% } %>
   </body>
 </html>

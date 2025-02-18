@@ -21,7 +21,9 @@
     </form>
     <div>
       <% folders.forEach((folder, index) => { %>
-      <a href="/<%= index %>/folder"><%= folder.name %></a>
+      <form action="/<%= index %>/folder" method="GET">
+        <input type="submit" value="<%= folder.name %>" />
+      </form>
       <% }) %>
     </div>
     <% if(selectedFolderIndex !== null && folders[selectedFolderIndex]) { %>

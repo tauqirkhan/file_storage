@@ -10,7 +10,7 @@ const postAddFolder = require("../controllers/postAddFolder");
 
 const indexRouter = Router();
 
-indexRouter.get("/", checkAuthentication, getIndexPage);
+indexRouter.get("/", getIndexPage);
 indexRouter.get("/login", getLoginForm);
 indexRouter.get("/sign-up", getSignUpForm);
 indexRouter.get(
@@ -18,7 +18,6 @@ indexRouter.get(
   checkAuthentication,
   getAllFilesFromUserFolder
 );
-
 
 indexRouter.post("/sign-up", postSignUp);
 indexRouter.post(

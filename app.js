@@ -96,7 +96,7 @@ passport.deserializeUser(async (id, done) => {
 
 app.use("/", indexRouter);
 
-app.get("log-out", (req, res, next) => {
+app.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     res.redirect("/");

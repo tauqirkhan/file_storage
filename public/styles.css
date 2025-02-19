@@ -1,0 +1,56 @@
+:root {
+  --primary-color: #b1b2ff;
+  --secondary-color: #aac4ff;
+  --accent-color: #d2daff;
+  --accent-color2: #eef1ff;
+  --primary-text-color: #2b2b2b;
+  --secondary-text-color: #333333fc;
+  --accent-text-color: #424242fc;
+}
+
+button {
+  all: unset; /* Resets all styles */
+  background: transparent; /* Ensures background is transparent */
+  border: none; /* Removes border */
+  padding: 0; /* Removes default padding */
+  font-size: inherit; /* Inherit font size from parent */
+  cursor: pointer; /* Ensures pointer cursor on hover */
+  outline: none; /* Removes default focus outline */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: var(--primary-color);
+  font-family: "Exo 2";
+}
+
+header {
+  min-height: 10vh;
+  background-color: var(--secondary-color);
+  color: var(--secondary-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 100px;
+}
+
+header .logo {
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  font-family: "Delicious Handrawn";
+}
+
+header > nav {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  gap: 100px;
+}

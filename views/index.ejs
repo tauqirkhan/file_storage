@@ -4,8 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>File Storage</title>
+    <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="/eventListeners/eventListener.js" type="module" defer></script>
   </head>
   <body>
+    <header>
+      <h1 class="logo">File Storage</h1>
+      <nav>
+        <% if(isAuthenticated) { %>
+        <a href="/logout" class="logOutTag">Logout</a>
+        <% } else { %>
+        <button class="loginBtn">Login</button>
+        <button class="signInBtn">Sign-In</button>
+        <% } %>
+      </nav>
+    </header>
+    <main>
+      <% if(folders !== null){ %>
+      <section class="folders"></section>
+      <section class="files"></section>
+      <% } %>
+    </main>
+    <footer></footer>
+    <% if(folders !== null){ %>
     <form action="/add/folder" method="POST">
       <div>
         <label for="folderName">Write folder name</label>
@@ -44,6 +72,55 @@
     <h1><%= file.filesize / 1024 %>KB</h1>
     <h1><%= file.updatedAt %></h1>
     <h1><%= file.filePath %></h1>
-    <% }) %> <% } %>
+    <% }) %> <% } %> <% } %>
+
+    <dialog id="loginDialog">
+      <form action="/login" method="POST">
+        <div>
+          <label for="username">Enter Username: </label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" />
+        </div>
+        <input type="submit" value="Login" />
+      </form>
+    </dialog>
+    <dialog id="signInDialog">
+      <form action="/sign-up" method="POST">
+        <div>
+          <label for="fullname">Full Name: </label>
+          <input
+            type="text"
+            id="fullname"
+            name="fullname"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <label for="username">Enter Username: </label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" />
+        </div>
+        <input type="submit" value="Sign Up" />
+      </form>
+    </dialog>
   </body>
 </html>

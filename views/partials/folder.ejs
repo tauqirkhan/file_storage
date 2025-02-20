@@ -1,0 +1,5 @@
+<% folders.forEach((folder, index) => { %>
+<form action="/<%= index %>/folder" method="GET" class="folderNameGetForm">
+  <input type="submit" value="<%= folder.name %>" class="folderNameBtn" />
+</form>
+<% }) %>

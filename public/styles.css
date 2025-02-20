@@ -8,7 +8,8 @@
   --accent-text-color: #424242fc;
 }
 
-button {
+button,
+input[type="submit"] {
   all: unset; /* Resets all styles */
   background: transparent; /* Ensures background is transparent */
   border: none; /* Removes border */
@@ -16,6 +17,31 @@ button {
   font-size: inherit; /* Inherit font size from parent */
   cursor: pointer; /* Ensures pointer cursor on hover */
   outline: none; /* Removes default focus outline */
+}
+
+::-webkit-scrollbar {
+  max-width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--secondary-color-1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color2);
+}
+
+::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 15px; /* Curve the scrollbar and track */
 }
 
 a {
@@ -70,8 +96,94 @@ footer {
 footer a {
   text-decoration: underline;
   font-weight: 700;
+  color: var(--secondary-text-color);
 }
 
 main {
   flex: 1;
+  display: flex;
+  color: var(--secondary-text-color);
+}
+
+/* temp */
+main > * {
+  border: 1px solid black;
+}
+
+.folders {
+  /* temp */
+  border: none;
+  max-width: 320px;
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  overflow-y: auto;
+  align-self: center;
+}
+
+.folders > .folderNameForm {
+  background-color: var(--primary-color);
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid black;
+}
+
+#openFolderNameInputBtn {
+  /* 310px width total */
+  min-width: 280px;
+  padding: 20px 0px;
+  padding-left: 20px;
+  font-size: 32px;
+  font-weight: bolder;
+  box-shadow: 0px 5px 10px 10px rgb(0, 0, 0, 0.1);
+}
+
+#openFolderNameInputBtn:hover {
+  background-color: var(--accent-color);
+}
+
+.folders .folderNameBtn {
+  /* 300px width total */
+  width: 250px;
+  padding: 8px 0px;
+  padding-left: 50px;
+  text-overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.folderNameBtn:hover {
+  background-color: var(--accent-color);
+  font-weight: bold;
+  color: var(--accent-text-color);
+}
+
+.files {
+  flex: 1;
+}
+
+/* folder form */
+.folderNameForm {
+  position: relative;
+}
+
+.hidden-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  display: none;
+  width: 200px;
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  color: var(--accent-text-color);
+  background-color: var(--accent-color2);
+}
+
+.show {
+  display: block;
 }

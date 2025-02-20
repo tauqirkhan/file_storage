@@ -28,8 +28,42 @@
     </header>
     <main>
       <% if(folders !== null){ %>
-      <section class="folders"></section>
-      <section class="files"></section>
+      <section class="folders">
+        <form class="folderNameForm" method="POST" action="/add/folder">
+          <button type="button" id="openFolderNameInputBtn">
+            + New folder
+          </button>
+          <input
+            type="text"
+            name="folderName"
+            class="hidden-input"
+            placeholder="Enter folder name"
+            autocomplete="off"
+          />
+        </form>
+        <%- include("partials/folder", {folders: folders}); %>
+      </section>
+      <section class="files">
+        <% if(selectedFolderIndex !== null && folders[selectedFolderIndex]) { %>
+        <div><%= folders[selectedFolderIndex].name %></div>
+        <form
+          action="/<%= selectedFolderIndex %>/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div>
+            <label for="uploadFile">upload File</label>
+            <input type="file" name="uploadFile" id="uploadFile" required />
+          </div>
+          <input type="submit" value="submit" />
+        </form>
+        <% folders[selectedFolderIndex].file.forEach(file => { %>
+        <h1><%= file.filename %></h1>
+        <h1><%= file.filesize / 1024 %>KB</h1>
+        <h1><%= file.updatedAt %></h1>
+        <h1><%= file.filePath %></h1>
+        <% }) %> <% } %>
+      </section>
       <% } %>
     </main>
     <footer>
@@ -41,47 +75,6 @@
         >
       </p>
     </footer>
-    <% if(folders !== null){ %>
-    <form action="/add/folder" method="POST">
-      <div>
-        <label for="folderName">Write folder name</label>
-        <input
-          type="text"
-          name="folderName"
-          id="folderName"
-          autocomplete="off"
-          required
-        />
-      </div>
-      <input type="submit" value="Add folder" />
-    </form>
-    <div>
-      <% folders.forEach((folder, index) => { %>
-      <form action="/<%= index %>/folder" method="GET">
-        <input type="submit" value="<%= folder.name %>" />
-      </form>
-      <% }) %>
-    </div>
-    <% if(selectedFolderIndex !== null && folders[selectedFolderIndex]) { %>
-    <div><%= folders[selectedFolderIndex].name %></div>
-    <form
-      action="/<%= selectedFolderIndex %>/upload"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <div>
-        <label for="uploadFile"></label>
-        <input type="file" name="uploadFile" id="uploadFile" required />
-      </div>
-      <input type="submit" value="submit" />
-    </form>
-    <% folders[selectedFolderIndex].file.forEach(file => { %>
-    <h1><%= file.filename %></h1>
-    <h1><%= file.filesize / 1024 %>KB</h1>
-    <h1><%= file.updatedAt %></h1>
-    <h1><%= file.filePath %></h1>
-    <% }) %> <% } %> <% } %>
-
     <dialog id="loginDialog">
       <form action="/login" method="POST">
         <div>

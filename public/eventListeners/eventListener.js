@@ -7,9 +7,12 @@ const openFolderNameInputBtn = document.querySelector(
 );
 const folderNameInput = document.querySelector(".hidden-input");
 const folderNameForm = document.querySelector(".folderNameForm");
+const addFileDialog = document.querySelector("#addFileDialog");
+const fileUploadBtnNodeList = document.querySelectorAll(".fileUploadBtn");
 
 addEventListenerToNodeList(loginBtnNodeList, loginDialog);
 addEventListenerToNodeList(signInBtnNodeList, signInDialog);
+addEventListenerToNodeList(fileUploadBtnNodeList, addFileDialog);
 
 openFolderNameInputBtn.addEventListener("click", () => {
   folderNameInput.classList.add("show");

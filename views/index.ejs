@@ -45,24 +45,25 @@
       </section>
       <section class="files">
         <% if(selectedFolderIndex !== null && folders[selectedFolderIndex]) { %>
-        <div><%= folders[selectedFolderIndex].name %></div>
-        <form
-          action="/<%= selectedFolderIndex %>/upload"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-          <div>
-            <label for="uploadFile">upload File</label>
-            <input type="file" name="uploadFile" id="uploadFile" required />
+        <div class="filesSectionHead">
+          <div class="folderNameOnFileSection">
+            <%= folders[selectedFolderIndex].name %>
           </div>
-          <input type="submit" value="submit" />
-        </form>
-        <% folders[selectedFolderIndex].file.forEach(file => { %>
-        <h1><%= file.filename %></h1>
-        <h1><%= file.filesize / 1024 %>KB</h1>
-        <h1><%= file.updatedAt %></h1>
-        <h1><%= file.filePath %></h1>
-        <% }) %> <% } %>
+          <button class="fileUploadBtn">Upload File</button>
+        </div>
+        <div class="filesDiv">
+          <div class="file fileHead">
+            <h1>Name</h1>
+            <h1>Date created</h1>
+            <h1>Date modified</h1>
+            <h1>Size</h1>
+            <h1>Type</h1>
+            <button class="moreFileInfoBtn">SVG</button>
+          </div>
+          <% folders[selectedFolderIndex].file.forEach(file => { %>
+            <%- include("partials/file", {file: file}); %>
+          <% }) %> <% } %>
+        </div>
       </section>
       <% } %>
     </main>
@@ -75,6 +76,26 @@
         >
       </p>
     </footer>
+    <dialog id="addFileDialog">
+      <form
+      <% if (selectedFolderIndex !== null) { %>
+        action="/<%= selectedFolderIndex %>/upload"
+      <% } else { %>
+        action="#"
+      <% } %>
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="uploadFile" class="uploadFileClass"
+            >upload File (Max: 10MB)</label
+          >
+          <input type="file" name="uploadFile" id="uploadFile" required />
+        </div>
+        <input type="submit" value="submit" />
+      </form>
+    </dialog>
+
     <dialog id="loginDialog">
       <form action="/login" method="POST">
         <div>

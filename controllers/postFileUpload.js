@@ -33,8 +33,9 @@ const postFileUpload = [
     const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(req.user.id);
     const selectedFolder = allFoldersArrayOfUser[selectedFolderIndex];
     const folderId = selectedFolder.id;
+    //add file type to file object
+    req.file.fileType = path.extname(req.file.filename);
     const fileObject = req.file;
-
     const insertFile = await insertFileInsideFolder(folderId, fileObject);
 
     res.redirect(`/${selectedFolderIndex}/folder`);

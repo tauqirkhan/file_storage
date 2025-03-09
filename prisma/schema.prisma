@@ -44,5 +44,6 @@ model File {
   updatedAt DateTime @updatedAt
   filePath String
   folderId  Int
+  fileType  String?
   folder    Folders  @relation(fields: [folderId], references: [id])
 }

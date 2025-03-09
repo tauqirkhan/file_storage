@@ -6,10 +6,10 @@ async function getAllFoldersArrayOfUser(userId) {
   const foldersArray = await prisma.folders.findMany({
     where: {
       userId: userId,
-    }, 
+    },
     include: {
-      file: true
-    }
+      file: true,
+    },
   });
 
   return foldersArray;
@@ -22,6 +22,7 @@ async function insertFileInsideFolder(folderId, fileObject) {
       filename: fileObject.filename,
       filesize: fileObject.size,
       filePath: fileObject.path,
+      fileType: fileObject.fileType,
     },
   });
   return result;

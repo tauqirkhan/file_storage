@@ -141,8 +141,9 @@ main {
   width: 250px;
   padding: 8px 0px;
   padding-left: 50px;
-  text-overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   border-left: 1px solid black;
@@ -153,19 +154,16 @@ main {
   font-weight: bold;
   color: var(--accent-text-color);
 }
-.files * {
-  border: 1px solid var(--accent-color2);
-}
 
 .files {
-  flex: 1;
+  min-width: 420px;
   background-color: var(--primary-color);
   color: var(--primary-text-color);
   margin: 50px 80px 0px 50px;
   overflow-x: auto;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 50px;
 }
 
 .filesSectionHead {
@@ -175,22 +173,30 @@ main {
   font-weight: 700;
 }
 
+.filesDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .filesDiv > .file {
   margin: auto;
   font-size: 18px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
+}
+
+.file > * {
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 8px;
 }
 
 .filesDiv > .file:first-child {
   font-size: 24px;
-}
-
-.file > * {
-  width: 200px;
-  text-overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* forms */

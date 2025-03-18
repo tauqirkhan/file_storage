@@ -1,7 +1,7 @@
 <div class="file">
-  <h2><%= file.filename %></h2>
-  <h2><%= file.createdAt %></h2>
-  <h2><%= file.updatedAt %></h2>
-  <h2><%= file.filesize / 1024 %>KB</h2>
-  <h2><%= file.fileType %></h2>
+  <h2 class="filename"><%= file.filename %></h2>
+  <h2 class="fileCreatedAt"><%= file.createdAt %></h2>
+  <h2 class="fileUpdatedAt"><%= file.updatedAt %></h2>
+  <h2 class="fileSize"><%= Math.round(file.filesize / 1024) %> KB</h2>
+  <h2 class="fileType"><%= file.fileType %></h2>
 </div>

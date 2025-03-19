@@ -33,10 +33,10 @@ model Folders {
   name   String
   userId Int
   user   Users  @relation(fields: [userId], references: [id])
-  file   File[]
+  file   Files[]
 }
 
-model File {
+model Files {
   id        Int      @id @default(autoincrement())
   filename  String
   filesize  Int

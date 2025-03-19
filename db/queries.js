@@ -16,7 +16,7 @@ async function getAllFoldersArrayOfUser(userId) {
 }
 
 async function insertFileInsideFolder(folderId, fileObject) {
-  const result = await prisma.file.create({
+  const result = await prisma.files.create({
     data: {
       folderId: folderId,
       filename: fileObject.filename,

@@ -7,6 +7,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const indexRouter = require("./routes/indexRouter");
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const prisma = new PrismaClient();
@@ -54,7 +55,7 @@ passport.use(
 
       if (!user) return done(null, false, { message: "Incorrect username" });
 
-      const match = String(password) === String(user.password);
+      const match = await bcrypt.compare(password, user.password);
 
       if (!match) return done(null, false, { message: "Incorrect password" });
 

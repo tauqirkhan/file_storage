@@ -2,6 +2,24 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+async function addSignedUpUserToUsersTable(username, fullname, password) {
+  const result = await prisma.users.create({
+    data: {
+      username,
+      fullname,
+      password,
+      folders: {
+        create: {
+          name: `${fullname}'s files`,
+        },
+      },
+    },
+    include: {
+      folders: true,
+    },
+  });
+}
+
 async function getAllFoldersArrayOfUser(userId) {
   const foldersArray = await prisma.folders.findMany({
     where: {
@@ -43,4 +61,5 @@ module.exports = {
   getAllFoldersArrayOfUser,
   insertFileInsideFolder,
   insertFolderByUser,
+  addSignedUpUserToUsersTable,
 };

@@ -1,26 +1,22 @@
 const { PrismaClient } = require("@prisma/client");
+const { addSignedUpUserToUsersTable } = require("../db/queries");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const prisma = new PrismaClient();
 
 const postSignUp = async (req, res, next) => {
   try {
     const { username, password, fullname } = req.body;
-    const result = await prisma.users.create({
-      data: {
-        username,
-        fullname,
-        password,
-        folders: {
-          create: {
-            name: `${fullname}'s files`,
-          },
-        },
-      },
-      include: {
-        folders: true,
-      },
-    });
-    console.log(result);
+
+    //Value stored in .env as string
+    const hashedPassword = await bcrypt.hash(
+      password,
+      Number(process.env.saltValue)
+    );
+
+    await addSignedUpUserToUsersTable(username, fullname, hashedPassword);
+
     res.redirect("/");
   } catch (err) {
     console.error(err);

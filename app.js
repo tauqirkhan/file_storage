@@ -8,6 +8,7 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 const indexRouter = require("./routes/indexRouter");
 const bcrypt = require("bcrypt");
+const methodOverride = require("method-override");
 require("dotenv").config();
 
 const prisma = new PrismaClient();
@@ -21,6 +22,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: false }));
+
+// To change POST request to delete request which is not support by browsers
+app.use(methodOverride("_method"));
 
 app.use(
   session({

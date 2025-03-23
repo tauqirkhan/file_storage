@@ -4,8 +4,8 @@
   <h2 class="fileUpdatedAt"><%= file.updatedAt %></h2>
   <h2 class="fileSize"><%= Math.round(file.filesize / 1024) %> KB</h2>
   <h2 class="fileType"><%= file.fileType %></h2>
-  <!-- <div>
-    <form action="/delete/file/:<%= file.id %>">
+  <div>
+    <form method="POST" action="/file/<%= file.id %>?_method=DELETE">
       <button type="submit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +20,5 @@
         </svg>
       </button>
     </form>
-    <button class="delete"></button>
-  </div> -->
+  </div>
 </div>

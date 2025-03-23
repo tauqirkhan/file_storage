@@ -28,6 +28,11 @@ const upload = multer({ storage: storage, limits: limits });
 const postFileUpload = [
   upload.single("uploadFile"),
   async (req, res) => {
+    const fileObject = req.file;
+
+    if (!fileObject)
+      return res.status(400).json({ message: "Please upload a file" });
+
     const { selectedFolderIndex } = req.params;
 
     const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(req.user.id);
@@ -35,7 +40,6 @@ const postFileUpload = [
     const folderId = selectedFolder.id;
     //add file type to file object
     req.file.fileType = path.extname(req.file.filename);
-    const fileObject = req.file;
     const insertFile = await insertFileInsideFolder(folderId, fileObject);
 
     res.redirect(`/${selectedFolderIndex}/folder`);

@@ -57,9 +57,33 @@ async function insertFolderByUser(userId, FolderName) {
   return result;
 }
 
+async function deleteFileByFileID(file_id) {
+  await prisma.files.delete({
+    where: {
+      id: file_id,
+    },
+  });
+}
+
+async function checkFileOwnerShip(user_id, file_id) {
+  const file = await prisma.files.findFirst({
+    where: {
+      id: file_id,
+      folder: {
+        userId: user_id,
+      },
+    },
+  });
+
+  //convert return value to boolean
+  return !!file;
+}
+
 module.exports = {
   getAllFoldersArrayOfUser,
   insertFileInsideFolder,
   insertFolderByUser,
   addSignedUpUserToUsersTable,
+  deleteFileByFileID,
+  checkFileOwnerShip,
 };

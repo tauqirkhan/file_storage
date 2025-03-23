@@ -28,6 +28,9 @@ const upload = multer({ storage: storage, limits: limits });
 const postFileUpload = [
   upload.single("uploadFile"),
   async (req, res) => {
+    //authentication already check
+    const user_id = req.user.id;
+
     const fileObject = req.file;
 
     if (!fileObject)
@@ -35,7 +38,7 @@ const postFileUpload = [
 
     const { selectedFolderIndex } = req.params;
 
-    const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(req.user.id);
+    const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(user_id);
     const selectedFolder = allFoldersArrayOfUser[selectedFolderIndex];
     const folderId = selectedFolder.id;
     //add file type to file object

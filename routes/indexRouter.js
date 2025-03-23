@@ -7,6 +7,7 @@ const checkAuthentication = require("../controllers/utils/checkAuthentication");
 const getAllFilesFromUserFolder = require("../controllers/getAllFilesFromUserFolder");
 const getIndexPage = require("../controllers/getIndexPage");
 const postAddFolder = require("../controllers/postAddFolder");
+const deleteFile = require("../controllers/deleteFile");
 
 const indexRouter = Router();
 
@@ -27,5 +28,7 @@ indexRouter.post(
 );
 
 indexRouter.post("/add/folder", postAddFolder);
+
+indexRouter.delete("/file/:file_id", checkAuthentication, deleteFile);
 
 module.exports = indexRouter;

@@ -37,7 +37,7 @@ async function insertFileInsideFolder(folderId, fileObject) {
   const result = await prisma.files.create({
     data: {
       folderId: folderId,
-      filename: fileObject.filename,
+      filename: fileObject.originalname,
       filesize: fileObject.size,
       filePath: fileObject.path,
       fileType: fileObject.fileType,

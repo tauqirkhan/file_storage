@@ -5,6 +5,9 @@ const {
   getAllFoldersArrayOfUser,
 } = require("../db/queries");
 
+const supabase = require("./utils/supabase");
+const { decode } = require("base64-arraybuffer");
+
 const storage = multer.memoryStorage();
 
 //10 MB max
@@ -15,24 +18,50 @@ const upload = multer({ storage: storage, limits: limits });
 const postFileUpload = [
   upload.single("uploadFile"),
   async (req, res) => {
-    //authentication already check
-    const user_id = req.user.id;
+    try {
+      //authentication already check
+      const user_id = req.user.id;
 
-    const fileObject = req.file;
+      const file = req.file;
 
-    if (!fileObject)
-      return res.status(400).json({ message: "Please upload a file" });
+      if (!file)
+        return res.status(400).json({ message: "Please upload a file" });
 
-    const { selectedFolderIndex } = req.params;
+      // decode file buffer to base64
+      const fileBase64 = decode(file.buffer.toString("base64"));
 
-    const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(user_id);
-    const selectedFolder = allFoldersArrayOfUser[selectedFolderIndex];
-    const folderId = selectedFolder.id;
-    //add file type to file object
-    req.file.fileType = path.extname(req.file.filename);
-    const insertFile = await insertFileInsideFolder(folderId, fileObject);
+      //upload the file to supabase
 
-    res.redirect(`/${selectedFolderIndex}/folder`);
+      const { data, error } = await supabase.storage
+        .from("file-storage-app")
+        .upload(file.originalname, fileBase64, {
+          contentType: "image/png",
+        });
+
+      if (error) throw error;
+
+      // get public url of the uploaded file
+      const { data: image } = supabase.storage
+        .from("file-storage-app")
+        .getPublicUrl(data.path);
+
+      //add path to file object
+      file.path = String(image.publicUrl);
+
+      const { selectedFolderIndex } = req.params;
+
+      const allFoldersArrayOfUser = await getAllFoldersArrayOfUser(user_id);
+      const selectedFolder = allFoldersArrayOfUser[selectedFolderIndex];
+      const folderId = selectedFolder.id;
+      //add file type to file object
+      req.file.fileType = path.extname(file.originalname);
+      const insertFile = await insertFileInsideFolder(folderId, file);
+
+      res.redirect(`/${selectedFolderIndex}/folder`);
+    } catch (err) {
+      console.error("Server Error:", err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
   },
 ];
 

@@ -5,20 +5,7 @@ const {
   getAllFoldersArrayOfUser,
 } = require("../db/queries");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", "private", "uploads"));
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix =
-      Date.now() +
-      "-" +
-      Math.round(Math.random() * 1e9) +
-      //to get file extension
-      path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
-  },
-});
+const storage = multer.memoryStorage();
 
 //10 MB max
 const limits = { fileSize: 10 * 1024 * 1024 };

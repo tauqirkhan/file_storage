@@ -20,6 +20,16 @@ async function addSignedUpUserToUsersTable(username, fullname, password) {
   });
 }
 
+async function getFileNameFromFileID(file_id) {
+  const result = await prisma.files.findUnique({
+    where: {
+      id: Number(file_id),
+    },
+  });
+
+  return result.filename;
+}
+
 async function getAllFoldersArrayOfUser(userId) {
   const foldersArray = await prisma.folders.findMany({
     where: {
@@ -81,6 +91,7 @@ async function checkFileOwnerShip(user_id, file_id) {
 
 module.exports = {
   getAllFoldersArrayOfUser,
+  getFileNameFromFileID,
   insertFileInsideFolder,
   insertFolderByUser,
   addSignedUpUserToUsersTable,
